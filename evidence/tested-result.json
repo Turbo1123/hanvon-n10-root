@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-12",
+  "tested_sample_count": 1,
+  "device_class": {
+    "model": "N10",
+    "hardware": "12.42",
+    "firmware": "1.02.49",
+    "soc": "RK3566",
+    "android": 11
+  },
+  "bootloader_already_unlocked_before_work": true,
+  "hardware_download_mode_entry_verified": true,
+  "main_emmc_backup_bytes": 31037849600,
+  "separate_emmc_hardware_boot_areas_and_rpmb_backed_up": false,
+  "firmware_partition_written": [
+    "boot"
+  ],
+  "full_boot_readback_matched_written_image": true,
+  "root_verified_after_reboot": true,
+  "root_identity": "uid=0(root) context=u:r:magisk:s0",
+  "magisk_version": "31.1 (31100)",
+  "normal_su_path": "/system/bin/su",
+  "selinux": "Enforcing",
+  "systemless_path_module": "n10_root_path",
+  "magisk_environment_check_exit": 0,
+  "mirroring": {
+    "usb": true,
+    "hardware_h264": true,
+    "mac_mouse_control_verified": true,
+    "latency_ms_measured": false
+  },
+  "navigation": {
+    "back_click_verified": true,
+    "home_click_verified": true,
+    "recents_click_verified": true,
+    "boot_autostart_tested": false
+  },
+  "restore_original_boot_write_tested": false,
+  "full_disk_restore_tested": false,
+  "contains_personal_identifiers": false
+}

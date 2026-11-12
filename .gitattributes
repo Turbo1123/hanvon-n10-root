@@ -1,0 +1,3 @@
+# Preserve upstream formatting and unified-diff context verbatim.
+third_party/** -whitespace
+patches/*.patch -whitespace

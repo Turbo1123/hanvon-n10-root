@@ -1,0 +1,24 @@
+{
+  "python_guard_tests": {
+    "count": 6,
+    "passed": true,
+    "covers": [
+      "unknown-loader rejection",
+      "ramdisk-only acceptance",
+      "kernel mutation rejection with python -O",
+      "missing serial rejection",
+      "default dry run never invokes USB tool",
+      "restricted current reader aborts before write"
+    ]
+  },
+  "actual_official_ota_hash_and_zip_crc_rechecked": true,
+  "actual_loader_patch_reproduces_expected_hash": true,
+  "actual_boot_offline_validation_matches_hardware_written_image": true,
+  "official_magisk_assets_extraction_hash_verified": true,
+  "rkdeveloptool_macos_arm64_build_passed": true,
+  "navigation_apk_build_and_signature_verification_passed": true,
+  "portable_scripts_reflashed_device_for_release": false,
+  "privacy_audit": "Tracked-source denylist and generic identifier checks passed; release archive receives a separate final audit.",
+  "actual_case_flash_dry_run_passed_with_nonexistent_usb_tool": true,
+  "actual_backup_secondary_gpt_table_crc_and_contents_match": true
+}

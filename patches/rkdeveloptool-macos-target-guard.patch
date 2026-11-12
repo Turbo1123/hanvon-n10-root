@@ -1,0 +1,61 @@
+diff --git a/RKComm.cpp b/RKComm.cpp
+index 0419e62..0601344 100644
+--- a/RKComm.cpp
++++ b/RKComm.cpp
+@@ -42,6 +42,24 @@ bool CRKUsbComm::InitializeUsb(STRUCT_RKDEVICE_DESC devDesc) {
+ 		}
+ 		return false;
+ 	}
++	// Require this task's device serial before claiming a USB interface.
++	const char *expectedSerial = getenv("N10_EXPECT_USB_SERIAL");
++	if (expectedSerial && expectedSerial[0]) {
++		struct libusb_device_descriptor descriptor;
++		unsigned char actualSerial[256] = {0};
++		int count = -1;
++		if (!libusb_get_device_descriptor((libusb_device *)devDesc.pUsbHandle, &descriptor)
++				&& descriptor.iSerialNumber) {
++			count = libusb_get_string_descriptor_ascii((libusb_device_handle *)m_pUsbHandle,
++					descriptor.iSerialNumber, actualSerial, sizeof(actualSerial) - 1);
++		}
++		if (count <= 0 || strcmp((const char *)actualSerial, expectedSerial)) {
++			fprintf(stderr, "N10 target serial check failed; refusing USB operation.\n");
++			libusb_close((libusb_device_handle *)m_pUsbHandle);
++			m_pUsbHandle = NULL;
++			return false;
++		}
++	}
+ 	struct libusb_config_descriptor *pConfigDesc = NULL;
+ 	iRet = libusb_get_active_config_descriptor(
+ 			(libusb_device *)devDesc.pUsbHandle, &pConfigDesc);
+diff --git a/meson.build b/meson.build
+index 808ce1f..7a867e7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -23,12 +23,14 @@ executable('rkdeveloptool',
+ 
+ 
+ # Install udev rules for the usb part
+-udev = dependency('udev')
+-udev_rules_dir = udev.get_pkgconfig_variable('udevdir') + '/rules.d'
+-install_data(
+-    ['99-rk-rockusb.rules'],
+-    install_dir: udev_rules_dir,
+-)
++if host_machine.system() == 'linux'
++    udev = dependency('udev')
++    udev_rules_dir = udev.get_pkgconfig_variable('udevdir') + '/rules.d'
++    install_data(
++        ['99-rk-rockusb.rules'],
++        install_dir: udev_rules_dir,
++    )
++endif
+ 
+ # Build and install the man pages
+ scdoc = dependency('scdoc', native: true, required: get_option('man-pages'))
+@@ -55,4 +57,4 @@ if scdoc.found()
+       install_dir: '@0@/man@1@'.format(mandir, section)
+     )
+   endforeach
+-endif
+\ No newline at end of file
++endif

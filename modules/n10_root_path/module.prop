@@ -1,0 +1,6 @@
+id=n10_root_path
+name=N10 Root Command Paths
+version=1.0
+versionCode=1
+author=Local N10 setup
+description=Expose the existing Magisk su and magisk clients through systemless command paths on the stock N10. Root grants remain controlled by Magisk.
